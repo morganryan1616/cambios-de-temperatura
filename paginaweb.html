@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Temperatura</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1f1f2e;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .contenedor {
+      background-color: #2a2a3d;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 25px;
+      font-size: 22px;
+      color: #00ffff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #cccccc;
+      text-align: left;
+    }
+
+    select, input[type="range"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: none;
+      background-color: #3a3a4d;
+      color: #f0f0f0;
+      font-size: 14px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      background: #00ffff;
+    }
+
+    .valor-rango {
+      margin-top: -15px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      color: #00ffff;
+      font-weight: bold;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      background-color: #3a3a4d;
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    .resultado p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #ffffff;
+    }
+
+    .temp-valor {
+      font-weight: bold;
+      color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <h2>Conversor de Temperatura</h2>
+
+  <label for="unidad">Unidad de entrada</label>
+  <select id="unidad" onchange="actualizar()">
+    <option value="Celsius">Celsius (°C)</option>
+    <option value="Fahrenheit">Fahrenheit (°F)</option>
+    <option value="Kelvin">Kelvin (K)</option>
+  </select>
+
+  <label for="slider">Temperatura</label>
+  <input type="range" id="slider" min="-100" max="500" value="0" oninput="actualizar()">
+  <div class="valor-rango">Valor: <span id="valor-slider">0</span></div>
+
+  <div class="resultado">
+    <p>Celsius: <span class="temp-valor" id="celsius"></span></p>
+    <p>Fahrenheit: <span class="temp-valor" id="fahrenheit"></span></p>
+    <p>Kelvin: <span class="temp-valor" id="kelvin"></span></p>
+  </div>
+</div>
+
+<script>
+  function actualizar() {
+    const unidad = document.getElementById("unidad").value;
+    const slider = document.getElementById("slider");
+    const valor = parseFloat(slider.value);
+
+    document.getElementById("valor-slider").textContent = valor;
+
+    let celsius, fahrenheit, kelvin;
+
+    if (unidad === "Celsius") {
+      celsius = valor;
+      fahrenheit = celsius * 9 / 5 + 32;
+      kelvin = celsius + 273.15;
+    } else if (unidad === "Fahrenheit") {
+      fahrenheit = valor;
+      celsius = (fahrenheit - 32) * 5 / 9;
+      kelvin = celsius + 273.15;
+    } else {
+      kelvin = valor;
+      celsius = kelvin - 273.15;
+      fahrenheit = (kelvin - 273.15) * 9 / 5 + 32;
+    }
+
+    document.getElementById("celsius").textContent = celsius.toFixed(2);
+    document.getElementById("fahrenheit").textContent = fahrenheit.toFixed(2);
+    document.getElementById("kelvin").textContent = kelvin.toFixed(2);
+  }
+
+  actualizar();
+</script>
+
+</body>
+</html>
